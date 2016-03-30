@@ -2,6 +2,8 @@ package com.anthony.emq_scrollview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -22,11 +24,20 @@ public class MainActivity extends AppCompatActivity {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    private RecyclerView recyclerView;
+    private TransactionAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        adapter = new TransactionAdapter(MainActivity.this);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setAdapter(adapter);
+
         loadMoreTransactions();
 
     }
@@ -71,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         //TODO update adapter
+                        adapter.notifyDataSetChanged();
 
                     }
                 }, new Response.ErrorListener() {

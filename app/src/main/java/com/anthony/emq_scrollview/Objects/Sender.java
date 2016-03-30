@@ -5,20 +5,20 @@ package com.anthony.emq_scrollview.Objects;
  */
 public class Sender {
 
-    private String sender;
+    private String senderName;
     private String note;
 
-    public Sender(String sender, String note) {
-        this.sender = sender;
+    public Sender(String senderName, String note) {
+        this.senderName = senderName;
         this.note = note;
     }
 
-    public String getSender() {
-        return sender;
+    public String getSenderName() {
+        return senderName;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     public String getNote() {
