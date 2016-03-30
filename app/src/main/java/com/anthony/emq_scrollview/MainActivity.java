@@ -50,19 +50,18 @@ public class MainActivity extends AppCompatActivity {
                                 String senderName, senderNote, recipient, currency;
 
                                 try {
-                                    String dateStr = jo.getString("created");
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    String dateStr = jo.getString(Transaction.CREATEDAT);
                                     createdAt = sdf.parse(dateStr);
                                 } catch (ParseException e) {
 
                                 }
 
-                                id = jo.getInt("id");
-                                senderName = jo.getJSONObject("source").getString("sender");
-                                senderNote = jo.getJSONObject("source").getString("note");
-                                recipient = jo.getJSONObject("destination").getString("recipient");
-                                currency = jo.getJSONObject("destination").getString("currency");
-                                amount = jo.getJSONObject("destination").getInt("amount");
+                                id = jo.getInt(Transaction.ID);
+                                senderName = jo.getJSONObject(Transaction.SOURCE).getString(Transaction.SENDER);
+                                senderNote = jo.getJSONObject(Transaction.SOURCE).getString(Transaction.NOTE);
+                                recipient = jo.getJSONObject(Transaction.DESTINATION).getString(Transaction.RECIPIENT);
+                                currency = jo.getJSONObject(Transaction.DESTINATION).getString(Transaction.CURRENCY);
+                                amount = jo.getJSONObject(Transaction.DESTINATION).getInt(Transaction.AMOUNT);
 
                                 DataHandler.getInstance().addTransaction(new Transaction(id, createdAt, senderName, senderNote, recipient, amount, currency));
 

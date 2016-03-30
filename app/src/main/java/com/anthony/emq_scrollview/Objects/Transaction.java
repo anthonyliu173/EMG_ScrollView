@@ -7,6 +7,16 @@ import java.util.Date;
  */
 public class Transaction {
 
+    public static final String ID = "id";
+    public static final String SOURCE = "source";
+    public static final String DESTINATION = "destination";
+    public static final String CREATEDAT = "created";
+    public static final String SENDER = "sender";
+    public static final String NOTE = "note";
+    public static final String RECIPIENT = "recipient";
+    public static final String CURRENCY = "currency";
+    public static final String AMOUNT = "amount";
+
     private int id;
     private Date createdAt;
 
