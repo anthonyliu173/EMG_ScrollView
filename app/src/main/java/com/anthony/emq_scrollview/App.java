@@ -9,6 +9,9 @@ import android.content.Context;
 public class App  extends Application
 {
 
+    //TODO measure each API request time taken and dynamically change [visibleThreshold] in [TransactionAdapter]
+    //TODO implement internet availability check
+
     @Override
     public void onCreate()
     {
