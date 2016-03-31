@@ -19,7 +19,7 @@ public class DataHandler {
     /**
      * numOfRecords is the number of records to be loaded for each request
      * */
-    private final int numOfRecords = 2;
+    private final int numOfRecords = 20;
 
     /**
      * currentIndex is the index(id) of the last transaction object retrieved

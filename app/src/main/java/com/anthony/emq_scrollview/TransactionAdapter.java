@@ -1,6 +1,7 @@
 package com.anthony.emq_scrollview;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,35 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context context;
     private int layoutId = R.layout.card_transaction;
 
-    public TransactionAdapter(Context context)
+    // The minimum amount of items to have below your current scroll position before loading more.
+    private int visibleThreshold = 6;
+    private int lastVisibleItem, totalItemCount;
+    private boolean isLoading;
+    private OnLoadMoreListener onLoadMoreListener;
+
+    public TransactionAdapter(Context context, RecyclerView recyclerView)
     {
         this.context = context;
+
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                totalItemCount = linearLayoutManager.getItemCount();
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    // End has been reached
+                    // Do something
+                    if (onLoadMoreListener != null) {
+                        onLoadMoreListener.onLoadMore();
+                    }
+                    isLoading = true;
+                }
+            }
+        });
+
     }
 
     @Override
@@ -50,6 +77,22 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int getItemCount()
     {
         return DataHandler.getInstance().getTransactionList().size();
+    }
+
+    /**
+     * loaded handles adapter update when transactions have been loaded.
+     * */
+    public void loaded(){
+        this.notifyDataSetChanged();
+        isLoading = false;
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
+    }
+
+    public interface OnLoadMoreListener {
+        void onLoadMore();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener

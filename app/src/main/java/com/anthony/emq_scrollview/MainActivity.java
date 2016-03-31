@@ -32,11 +32,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adapter = new TransactionAdapter(MainActivity.this);
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        adapter = new TransactionAdapter(MainActivity.this, recyclerView);
         recyclerView.setAdapter(adapter);
+        adapter.setOnLoadMoreListener(new TransactionAdapter.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                loadMoreTransactions();
+            }
+        });
 
         loadMoreTransactions();
 
@@ -81,8 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-                        //TODO update adapter
-                        adapter.notifyDataSetChanged();
+                        adapter.loaded();
 
                     }
                 }, new Response.ErrorListener() {
